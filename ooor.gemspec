@@ -1,5 +1,5 @@
 Gem::Specification.new do |s|
-  s.name = %q{ooor}
+  s.name = %q{ooor-episko}
   s.version = "1.9.0"
   s.date = %q{2013-02-22}
   s.authors = ["Raphael Valyi - www.akretion.com"]
