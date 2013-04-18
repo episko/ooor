@@ -24,7 +24,7 @@ module Ooor
   def self.extensions
     @extensions
   end
-  
+
   class Ooor
     include DbService
     include CommonService
@@ -48,20 +48,7 @@ module Ooor
 
     def get_rpc_client(url)
       @rpc_clients ||= {}
-      unless @rpc_clients[url]
-        if defined?(Java) && @config[:rpc_client] != 'ruby'
-          begin
-            require 'jooor'
-            @rpc_clients[url] = get_java_rpc_client(url)
-          rescue LoadError
-            puts "WARNING falling back on Ruby xmlrpc/client client (much slower). Install the 'jooor' gem if you want Java speed for the RPC!"
-            @rpc_clients[url] = get_ruby_rpc_client(url)
-          end
-        else
-          @rpc_clients[url] = get_ruby_rpc_client(url)
-        end
-      end
-      @rpc_clients[url]
+      @rpc_clients[url] ||= get_ruby_rpc_client(url)
     end
 
     def get_ruby_rpc_client(url)
@@ -137,7 +124,7 @@ module Ooor
       end
     end
   end
-  
+
   if defined?(Rails) #Optional autoload in Rails:
     if Rails.version[0] == "3"[0] #Rails 3 bootstrap
       class Railtie < Rails::Railtie
